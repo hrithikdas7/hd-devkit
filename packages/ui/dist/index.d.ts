@@ -1,17 +1,30 @@
-import * as react_jsx_runtime from 'react/jsx-runtime';
 import React from 'react';
 
-interface Column {
-    key: string;
-    label: string;
-    render?: (value: any, row: any) => React.ReactElement;
-}
-interface Props {
-    columns: Column[];
-    data: any[];
+interface TableSchema {
     title?: string;
-    searchable?: boolean;
+    search?: boolean;
+    sortable?: boolean;
+    columns: {
+        key: string;
+        label: string;
+        type?: "string" | "number" | "date" | "status";
+        colors?: Record<string, string>;
+    }[];
 }
-declare const DynamicTable: ({ columns, data, title, searchable, }: Props) => react_jsx_runtime.JSX.Element;
+interface PaginationConfig {
+    type: "pages" | "none";
+    page: number;
+    total: number;
+    pageSize: number;
+    onPageChange: (page: number) => void;
+}
+interface DynamicTableProps {
+    schema: TableSchema;
+    data: any[];
+    loading?: boolean;
+    pagination?: PaginationConfig;
+    onSearchChange?: (query: string) => void;
+}
+declare const DynamicTable: React.FC<DynamicTableProps>;
 
-export { type Column, DynamicTable };
+export { DynamicTable, type PaginationConfig, type TableSchema };
