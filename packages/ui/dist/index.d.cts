@@ -1,5 +1,17 @@
 import * as react_jsx_runtime from 'react/jsx-runtime';
+import React from 'react';
 
-declare const DynamicTable: ({ columns, data, className, striped, hover, }: any) => react_jsx_runtime.JSX.Element;
+interface Column {
+    key: string;
+    label: string;
+    render?: (value: any, row: any) => React.ReactElement;
+}
+interface Props {
+    columns: Column[];
+    data: any[];
+    title?: string;
+    searchable?: boolean;
+}
+declare const DynamicTable: ({ columns, data, title, searchable, }: Props) => react_jsx_runtime.JSX.Element;
 
-export { DynamicTable };
+export { type Column, DynamicTable };
